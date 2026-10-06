@@ -1,0 +1,19 @@
+[Unit]
+Description=Raspberry Pi AutoCAR Web Controller
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=@AUTOCAR_USER@
+Group=@AUTOCAR_GROUP@
+SupplementaryGroups=@AUTOCAR_DEVICE_GROUPS@
+WorkingDirectory=/opt/autocar
+EnvironmentFile=-/etc/autocar.env
+ExecStart=/opt/autocar-venv/bin/python -m autocar.server
+Restart=on-failure
+RestartSec=2
+KillSignal=SIGINT
+
+[Install]
+WantedBy=multi-user.target
